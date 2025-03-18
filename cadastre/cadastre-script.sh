@@ -2,6 +2,9 @@
 echo "Start tuile cadastre data " $(date)
 
 dbname="bati-foncier"
+host="localhost"
+port="5432"
+user="postgres"
 
 echo "Import data form Postgres begin" $(date)
 rm -rf data && rm -f cadastre.mbtiles
@@ -10,7 +13,7 @@ mkdir data && cd data
 parcelles="select *
 	from public.cadastre;
 "
-ogr2ogr -f "GeoJSON" "parcelles.geojson" PG:"host=82.165.248.216 port=5433 dbname=$dbname user=postgres" -sql "$parcelles"
+ogr2ogr -f "GeoJSON" "parcelles.geojson" PG:"host=$host port=$port dbname=$dbname user=$user" -sql "$parcelles"
 
 echo "Tuile JSON data with tippecanoe begin" $(date)
 echo "Tuile data cadastre" $(date)

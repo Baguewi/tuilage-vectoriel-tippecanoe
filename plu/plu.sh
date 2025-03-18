@@ -2,6 +2,9 @@
 echo "Start tuile plu data " $(date)
 
 dbname="bati-foncier"
+host="localhost"
+port="5432"
+user="postgres"
 
 echo "Import data form Postgres begin" $(date)
 rm -rf data && rm -f plu-zone-urba.mbtiles
@@ -39,7 +42,7 @@ plu_request="select ogc_fid id,
 		typezone, datvalid, wkb_geometry geom
 	from plu_zone_urba
 "
-ogr2ogr -f "GeoJSON" "plu-zone-urba.geojson" PG:"host=82.165.248.216 port=5433 dbname=$dbname user=postgres" -sql "$plu_request"
+ogr2ogr -f "GeoJSON" "plu-zone-urba.geojson" PG:"host=$host port=$port dbname=$dbname user=$user" -sql "$plu_request"
 
 echo "Tuile JSON data with tippecanoe begin" $(date)
 echo "Tuile data PLU zone-urba" $(date)

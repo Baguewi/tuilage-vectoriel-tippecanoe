@@ -2,6 +2,9 @@
 echo "Start tuile DVF data " $(date)
 
 dbname="bati-foncier"
+host="localhost"
+port="5432"
+user="postgres"
 
 echo "Import data form Postgres begin" $(date)
 rm -rf data && rm -f dvf.mbtiles
@@ -32,10 +35,10 @@ parc_request="select d.id, ST_MakeValid(c.wkb_geometry) geom
 					on d.id = c.id"
 
 echo "Import data DVF-DATA" $(date)
-ogr2ogr -f "GeoJSON" "dvf-data.geojson" PG:"host=82.165.248.216 port=5433 dbname=$dbname user=postgres" -sql "$dvf_request"
+ogr2ogr -f "GeoJSON" "dvf-data.geojson" PG:"host=$host port=$port dbname=$dbname user=$user" -sql "$dvf_request"
 
 echo "Import data DVF-PARCELLE" $(date)
-ogr2ogr -f "GeoJSON" "dvf-cadastre.geojson" PG:"host=82.165.248.216 port=5433 dbname=$dbname user=postgres" -sql "$parc_request"
+ogr2ogr -f "GeoJSON" "dvf-cadastre.geojson" PG:"host=$host port=$port dbname=$dbname user=$user" -sql "$parc_request"
 
 echo "Tuile JSON data with tippecanoe begin" $(date)
 echo "Tuile data DVF-DATA" $(date)

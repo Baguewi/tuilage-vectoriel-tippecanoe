@@ -2,6 +2,9 @@
 echo "Start tuile batiment_proprietaire data " $(date)
 
 dbname="bati-foncier"
+host="localhost"
+port="5432"
+user="postgres"
 
 echo "Import data form Postgres begin" $(date)
 rm -rf data && rm -f bati-proprietaire.mbtiles
@@ -10,7 +13,7 @@ mkdir data && cd data
 bat_proprietaire="select *
 	from public.batiment_proprietaire bp
 "
-ogr2ogr -f "GeoJSON" "bati-proprietaire.geojson" PG:"port=5433 dbname=$dbname user=postgres" -sql "$bat_proprietaire"
+ogr2ogr -f "GeoJSON" "bati-proprietaire.geojson" PG:"port=$port dbname=$dbname user=$user" -sql "$bat_proprietaire"
 
 echo "Tuile JSON data with tippecanoe begin" $(date)
 echo "Tuile data Batiment - Proprietairene" $(date)
