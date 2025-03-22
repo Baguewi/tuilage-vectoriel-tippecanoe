@@ -48,7 +48,16 @@ echo "Tuile JSON data with tippecanoe begin" $(date)
 echo "Tuile data PLU zone-urba" $(date)
 tippecanoe --detect-shared-borders --simplify-only-low-zooms --generate-ids --read-parallel --force --coalesce-densest-as-needed -Z10 -z16 --output plu-zone-urba.mbtiles plu-zone-urba.geojson
 
-mv plu-zone-urba.mbtiles ../.
+FICHIER="plu-zone-urba.mbtiles"
+MIN_SIZE_MB=10
+
+if [ -f "$FICHIER" ]; then
+    FILE_SIZE=$(stat -c%s "$FICHIER")
+    FILE_SIZE_MB=$((FILE_SIZE / 1024 / 1024))
+    if [ "$FILE_SIZE_MB" -ge "$MIN_SIZE_MB" ]; then
+        mv plu-zone-urba.mbtiles /mnt/c/www/tileserver/
+    fi
+fi
 cd .. && rm -rf data
 
 echo End $(date)

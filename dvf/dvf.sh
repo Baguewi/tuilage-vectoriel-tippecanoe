@@ -50,9 +50,18 @@ tippecanoe --detect-shared-borders --simplify-only-low-zooms --generate-ids --re
 rm dvf-cadastre.geojson
 
 echo "Tuile data JOIN" $(date)
-tile-join '--attribution=Etalab' '--name=dvf' --no-tile-size-limit --force --output dvf.mbtiles dvf-data.mbtiles dvf-cadastre.mbtiles
+tile-join '--attribution=Timbi dev (Mody Yaya DIALLO)' '--name=dvf' --no-tile-size-limit --force --output dvf.mbtiles dvf-data.mbtiles dvf-cadastre.mbtiles
 
-mv dvf.mbtiles ../.
-# cd .. && rm -rf data
+FICHIER="dvf.mbtiles"
+MIN_SIZE_MB=10
+
+if [ -f "$FICHIER" ]; then
+    FILE_SIZE=$(stat -c%s "$FICHIER")
+    FILE_SIZE_MB=$((FILE_SIZE / 1024 / 1024))
+    if [ "$FILE_SIZE_MB" -ge "$MIN_SIZE_MB" ]; then
+        mv dvf.mbtiles /mnt/c/www/tileserver/
+    fi
+fi
+cd .. && rm -rf data
 
 echo End $(date)
