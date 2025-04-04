@@ -1,5 +1,6 @@
 #! /bin/bash
 echo "Start" $(date)
+cd /mnt/c/dev/tuilage-vectoriel-tippecanoe/sirene/
 rm -f *.geojson
 rm -rf *.mbtiles
 
