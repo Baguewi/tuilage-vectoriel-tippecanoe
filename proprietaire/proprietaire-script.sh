@@ -1,7 +1,7 @@
 #! /bin/bash
 echo "Start tuile batiment_proprietaire data " $(date)
 
-dbname="bati-foncier"
+dbname="bati"
 host="localhost"
 port="5432"
 user="postgres"
@@ -19,7 +19,18 @@ echo "Tuile JSON data with tippecanoe begin" $(date)
 echo "Tuile data Batiment - Proprietairene" $(date)
 tippecanoe --detect-shared-borders --simplify-only-low-zooms --generate-ids --read-parallel --force --coalesce-densest-as-needed -Z13 -z16 --output bati-proprietaire.mbtiles bati-proprietaire.geojson
 
-mv bati-proprietaire.mbtiles ../.
-cd .. && rm -rf data
+FICHIER="bati-proprietaire.mbtiles"
+MIN_SIZE_MB=1000
+
+if [ -f "$FICHIER" ]; then
+    FILE_SIZE=$(stat -c%s "$FICHIER")
+    FILE_SIZE_MB=$((FILE_SIZE / 1024 / 1024))
+    if [ "$FILE_SIZE_MB" -ge "$MIN_SIZE_MB" ]; then
+        mv bati-proprietaire.mbtiles /mnt/c/www/tileserver/
+    fi
+fi
+
+rm -rf *.mbtiles
+rm -rf *.geojson
 
 echo End $(date)
