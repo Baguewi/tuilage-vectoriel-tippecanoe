@@ -56,8 +56,8 @@ echo "Tuile data entreprise individuel" $(date)
 tippecanoe -f -o ent_individuel.mbtiles -Z13 -z16 -pf -pk --generate-ids --read-parallel --cluster-densest-as-needed --extend-zooms-if-still-dropping ent_individuel.geojson
 #tippecanoe -f -o cluster_ent_individuel.mbtiles -Z12 -z16 -r1 --generate-ids --read-parallel --cluster-distance=20 ent_individuel.geojson
 
-echo "Tuile data entreprise" $(date)
-tile-join '--attribution=Timbi dev (Mody Yaya DIALLO)' -f -o etablissement.mbtiles -pk sirene.mbtiles etab_public.mbtiles ent_individuel.mbtiles cluster_sirene.mbtiles
+#echo "Tuile data entreprise" $(date)
+#tile-join '--attribution=Timbi dev (Mody Yaya DIALLO)' -f -o etablissement.mbtiles -pk sirene.mbtiles etab_public.mbtiles ent_individuel.mbtiles cluster_sirene.mbtiles
 
 sirene="sirene.mbtiles"
 MIN_SIZE_MB=10
@@ -88,14 +88,14 @@ if [ -f "$ent_individuel" ]; then
     fi
 fi
 
-etablissement="etablissement.mbtiles"
-if [ -f "$etablissement" ]; then
-    FILE_SIZE=$(stat -c%s "$etablissement")
-    FILE_SIZE_MB=$((FILE_SIZE / 1024 / 1024))
-    if [ "$FILE_SIZE_MB" -ge "$MIN_SIZE_MB" ]; then
-        mv etablissement.mbtiles /mnt/c/www/tileserver/
-    fi
-fi
+#etablissement="etablissement.mbtiles"
+#if [ -f "$etablissement" ]; then
+#    FILE_SIZE=$(stat -c%s "$etablissement")
+#    FILE_SIZE_MB=$((FILE_SIZE / 1024 / 1024))
+#    if [ "$FILE_SIZE_MB" -ge "$MIN_SIZE_MB" ]; then
+#        mv etablissement.mbtiles /mnt/c/www/tileserver/
+#    fi
+#fi
 
 rm -rf *.mbtiles
 
