@@ -34,7 +34,7 @@ function generate_tiles {
     local fichier=$1
     local nom_couche=$2
     echo "🧱 Génération des tuiles pour ${fichier}.geojson" $(date)
-    tippecanoe --layer="$nom_couche" --detect-shared-borders --simplify-only-low-zooms --generate-ids --read-parallel --force -Z10 -z14 --output "${fichier}.mbtiles" "${fichier}.geojson"
+    tippecanoe --layer="$nom_couche" --detect-shared-borders --simplify-only-low-zooms --generate-ids --read-parallel --force -Z6 -z14 --output "${fichier}.mbtiles" "${fichier}.geojson"
     rm "${fichier}.geojson"
 }
 
